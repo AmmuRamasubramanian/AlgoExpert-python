@@ -1,0 +1,40 @@
+class Node:
+    def __init__(self,value):
+        self.value=value
+        self.left=None
+        self.right=None
+
+tree=Node(1)
+tree.left=Node(2)
+tree.right=Node(3)
+tree.left.left=Node(4)
+tree.left.right=Node(5)
+tree.right.left=Node(6)
+tree.right.right=Node(7)
+tree.left.left.left=Node(8)
+tree.left.left.right=Node(9)
+
+
+def nodeDepths(tree):
+  sumOfDepths=0
+  stack=[{"node":tree,"depth":0}]
+  while len(stack)!=0:
+      current=stack.pop(0)
+      currentNode, currentDepth=current["node"],current["depth"]
+      if currentNode is None:
+          continue
+      sumOfDepths+=currentDepth
+      stack.append({"node":currentNode.left,"depth":currentDepth+1})
+      stack.append({"node":currentNode.right,"depth":currentDepth+1})
+  return sumOfDepths
+
+def nodeDepthRecursion(tree):
+    return calculateNodeDepth(tree)
+
+def calculateNodeDepth(tree, depth=0):
+    if tree is None:
+        return 0
+    return depth+calculateNodeDepth(tree.left,depth+1)+calculateNodeDepth(tree.right,depth+1)
+
+print(nodeDepths(tree))
+print(nodeDepthRecursion(tree))
